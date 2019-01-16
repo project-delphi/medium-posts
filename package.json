@@ -1,0 +1,31 @@
+{
+  "name": "medium-posts",
+  "version": "1.0.0",
+  "description": "A repository of medium posts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/project-delphi/medium-posts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/project-delphi/medium-posts/issues"
+  },
+  "homepage": "https://github.com/project-delphi/medium-posts#readme",
+  "dependencies": {
+    "medium-to-markdown": "0.0.2",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
