@@ -1,7 +1,7 @@
 pr_comp <- function(X, k = ncol(X), center=T, scale=T){
   n <- dim(X)[1]
   p <- dim(X)[2]
-  ones <- rep(1,n)
+  ones <- matrix(rep(1,n),nrow=n)
   if(center){
   H <- (diag(n) -  (1/n) * ones %*% t(ones))
   } else {
@@ -49,7 +49,7 @@ cat('\n explained_variance equal:', all(round(pca_pr_comp$explained_variance - p
 cat('\n')
 }
 
-#testPCA()
+testPCA()
 
 testPCA_SVD <- function(){
 data(iris)
