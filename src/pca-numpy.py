@@ -42,7 +42,7 @@ def PCA_svd(X, k, center=True):
   X_center =  np.matmul(H, X)
   u, s, v = np.linalg.svd(X_center) 
   components  = v[:k]
-  explained_variance = np.square(s[:k])
+  explained_variance = np.square(s[:k])/(n-1)
   return { 'X':X, 'k':k, 'components':components,     
     'explained_variance':explained_variance }
 
@@ -55,7 +55,7 @@ def PCA_test_svd():
   X_reduced_svd = PCA_svd(iris.data, k)
   comp_diff = np.round(np.absolute(X_reduced.components_) - np.absolute(X_reduced_svd['components']),3)
   print('Equal Components: ', np.array_equal(comp_diff,np.zeros([p,p])))
-  var_diff = np.round((n-1)*X_reduced.explained_variance_ - X_reduced_svd['explained_variance'], 3)
+  var_diff = np.round(X_reduced.explained_variance_ - X_reduced_svd['explained_variance'], 3)
   print('Equal Explained Variance: ', np.array_equal(var_diff, np.zeros(k)))
   return
 
