@@ -9,19 +9,16 @@ def PCA_eig(X,k, center=True, scale=False):
   h = ((1/n) * torch.mm(ones, ones.t())) if center  else torch.zeros(n*n).view([n,n])
   H = torch.eye(n) - h
   X_center =  torch.mm(H.double(), X.double())
-  covariance = 1/(n-1) * torch.mm(X_center.t(), X_center)
-  scaling =  torch.sqrt(1/torch.diag(covariance)).double() if scale else torch.ones(p).view([p,1]).double()
-  print(covariance, scaling)
-  return
-  scaled_covariance = torch.mm(torch.diag(scaling), covariance)
-  w,v = torch.symeig(scaled_covariance)
-  components = v[:, :k]
-  explained_variance = w[:k]
+  covariance = 1/(n-1) * torch.mm(X_center.t(), X_center).view(p,p)
+  scaling =  torch.sqrt(1/torch.diag(covariance)).double() if scale else torch.ones(p).double()
+  scaled_covariance = torch.mm(torch.diag(scaling).view(p,p), covariance)
+  eigenvalues, eigenvectors = torch.eig(scaled_covariance, True)
+  components = (eigenvectors[:, :k]).t()
+  print(components)
+  explained_variance = eigenvalues[:k, 0]
+  print(explained_variance)
   return { 'X':X, 'k':k, 'components':components,     
     'explained_variance':explained_variance }
-
-#  torch.from_numpy(iris.data).float().to(device)
-
 
 # TEST
 def PCA_test_eig():
@@ -30,15 +27,15 @@ def PCA_test_eig():
   n, p = iris_data.size()
   k = p
   X_reduced = PCA(n_components=k).fit(iris.data)
-  X_reduced_svd = PCA_eig(iris_data, k)
+  X_reduced_eig = PCA_eig(iris_data, k)
   comps_isclose = (torch.allclose(
    torch.abs(torch.from_numpy(X_reduced.components_).double()),
-   torch.abs(X_reduced_svd['components'])
+   torch.abs(X_reduced_eig['components'])
    ))
   print('Equal Components: ', comps_isclose)
   vars_isclose = (torch.allclose(
    torch.from_numpy(X_reduced.explained_variance_).double(),
-   X_reduced_svd['explained_variance']
+   X_reduced_eig['explained_variance']
    ))
   print('Equal Explained Variance: ', vars_isclose)
   return
@@ -77,4 +74,4 @@ def PCA_test_svd():
   print('Equal Explained Variance: ', vars_isclose)
   return
 
-PCA_test_svd()
+#PCA_test_svd()
