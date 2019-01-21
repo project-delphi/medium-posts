@@ -14,9 +14,7 @@ def PCA_eig(X,k, center=True, scale=False):
   scaled_covariance = torch.mm(torch.diag(scaling).view(p,p), covariance)
   eigenvalues, eigenvectors = torch.eig(scaled_covariance, True)
   components = (eigenvectors[:, :k]).t()
-  print(components)
   explained_variance = eigenvalues[:k, 0]
-  print(explained_variance)
   return { 'X':X, 'k':k, 'components':components,     
     'explained_variance':explained_variance }
 

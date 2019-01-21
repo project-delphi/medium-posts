@@ -18,7 +18,6 @@ def PCA_eig(X,k, center=True, scale=False):
     'explained_variance':explained_variance }
 
 
-
 # TEST
 def PCA_test_eig():
   iris = datasets.load_iris()
