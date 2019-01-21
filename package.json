@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/project-delphi/medium-posts#readme",
   "dependencies": {
+    "katex": "^0.10.0",
     "medium-to-markdown": "0.0.2",
     "request": "^2.88.0"
   },
